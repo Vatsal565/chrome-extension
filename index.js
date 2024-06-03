@@ -1,9 +1,10 @@
 let myLinks = []
 
 const inputEl = document.querySelector("#input-el")
-const inputbtn = document.querySelector('#input-btn')
+const inputBtn = document.querySelector('#input-btn')
 const ulEl = document.querySelector("#ul-el")
-const deletebtn = document.querySelector("#delete-btn")
+const deleteBtn = document.querySelector("#delete-btn")
+const tabBtn = document.querySelector("#tab-btn")
 
 const stored_links = JSON.parse(localStorage.getItem("myLinks"))
 
@@ -11,15 +12,6 @@ if (stored_links) {
     myLinks = stored_links
     renderLinks(myLinks)
 }
-
-inputbtn.addEventListener("click", function() {
-    myLinks.push(inputEl.value)
-    inputEl.value = ""
-
-    localStorage.setItem("myLinks", JSON.stringify(myLinks))
-    renderLinks(myLinks)
-    console.log(localStorage.getItem("myLinks"));
-})
 
 // console.log(localStorage.getItem("myLinks"));
 // local storage only stores strings
@@ -31,11 +23,11 @@ function renderLinks(links) {
     
     for (let i = 0; i < links.length; i++) {
         listItems += `
-            <li>
-                <a target='_blank' href='${links[i]}'>
-                    ${links[i]}
-                </a>
-            </li>`
+        <li>
+        <a target='_blank' href='${links[i]}'>
+        ${links[i]}
+        </a>
+        </li>`
         /*  
         adding by creating a new element and then set text content, then append it to ul.
         
@@ -49,8 +41,24 @@ function renderLinks(links) {
     
 }
 
-deletebtn.addEventListener("dblclick", function () {
+inputBtn.addEventListener("click", function() {
+    myLinks.push(inputEl.value)
+    inputEl.value = ""
+
+    localStorage.setItem("myLinks", JSON.stringify(myLinks))
+    renderLinks(myLinks)
+})
+
+deleteBtn.addEventListener("dblclick", function () {
     localStorage.clear()
     myLinks = []
     renderLinks(myLinks)
+})
+
+tabBtn.addEventListener("click", function () {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        myLinks.push(tabs[0].url)
+        localStorage.setItem("myLinks", JSON.stringify(myLinks))
+        renderLinks(myLinks)
+    })
 })

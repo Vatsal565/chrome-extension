@@ -16,7 +16,7 @@ body {
     border: 1px solid green;
 }
 
-#input-btn, #delete-btn, #save-btn {
+#input-btn, #delete-btn, #tab-btn {
     padding: 10px 20px;
     background-color: green;
     color: white;
