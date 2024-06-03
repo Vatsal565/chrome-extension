@@ -16,7 +16,7 @@ body {
     border: 1px solid green;
 }
 
-#input-btn {
+#input-btn, #delete-btn {
     padding: 10px 20px;
     background-color: green;
     color: white;
@@ -24,6 +24,14 @@ body {
     margin-bottom: 20px;
     border: none;
     font-weight: bold;
+    cursor: pointer;
+    border: 1px solid green
+}
+
+#delete-btn {
+    background-color: white;
+    color: green;
+    border: 1px solid green
 }
 
 #ul-el>li {
