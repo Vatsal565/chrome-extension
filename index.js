@@ -3,12 +3,13 @@ let myLinks = []
 const inputEl = document.querySelector("#input-el")
 const inputbtn = document.querySelector('#input-btn')
 const ulEl = document.querySelector("#ul-el")
+const deletebtn = document.querySelector("#delete-btn")
 
-let stored_links = JSON.parse(localStorage.getItem("myLinks"))
+const stored_links = JSON.parse(localStorage.getItem("myLinks"))
 
 if (stored_links) {
     myLinks = stored_links
-    renderCode()
+    renderLinks(myLinks)
 }
 
 inputbtn.addEventListener("click", function() {
@@ -16,7 +17,7 @@ inputbtn.addEventListener("click", function() {
     inputEl.value = ""
 
     localStorage.setItem("myLinks", JSON.stringify(myLinks))
-    renderCode()
+    renderLinks(myLinks)
     console.log(localStorage.getItem("myLinks"));
 })
 
@@ -25,14 +26,14 @@ inputbtn.addEventListener("click", function() {
 // therefore we have to convert the array into strings using JSON.stringify()
 // to fatch data from the storage, use JSON.parse(localStorage.getItem(key))
 
-function renderCode() {
+function renderLinks(links) {
     let listItems = ""
     
-    for (let i = 0; i < myLinks.length; i++) {
+    for (let i = 0; i < links.length; i++) {
         listItems += `
             <li>
-                <a target='_blank' href='${myLinks[i]}'>
-                    ${myLinks[i]}
+                <a target='_blank' href='${links[i]}'>
+                    ${links[i]}
                 </a>
             </li>`
         /*  
@@ -47,3 +48,9 @@ function renderCode() {
     ulEl.innerHTML = listItems
     
 }
+
+deletebtn.addEventListener("dblclick", function () {
+    localStorage.clear()
+    myLinks = []
+    renderLinks(myLinks)
+})
